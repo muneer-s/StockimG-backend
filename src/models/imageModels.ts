@@ -14,6 +14,10 @@ const imageSchema: Schema<ImageInterface> = new Schema({
     type: String,
     required: true,
   },
+   position: {
+    type: Number,
+    required: true,
+  }
 });
 
 const ImageModel: Model<ImageInterface> = mongoose.model<ImageInterface>("Image", imageSchema);

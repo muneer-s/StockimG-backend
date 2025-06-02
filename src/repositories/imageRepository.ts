@@ -18,6 +18,14 @@ class ImageRepository implements IImageRepository {
         this.imageRepository = new BaseRepository(ImageModel)
     }
 
+    async getImageCountByEmail(email: string): Promise<number> {
+        try {
+            return await this.imageRepository.countDocuments({ email });
+        } catch (error) {
+            throw error
+        }
+    }
+
     async saveImage(formData: any): Promise<ImageInterface> {
         try {
             const newImage = await this.imageRepository.create(formData);

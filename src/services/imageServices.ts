@@ -21,10 +21,15 @@ class imageServices implements IImageServise {
                 uploadStream.end(file.buffer);
             });
 
+            const imageCount = await this.imageRepository.getImageCountByEmail(email);
+            const position = imageCount + 1;
+
+
             const imageData = {
                 email,
                 title,
                 image: uploadResult.secure_url,
+                position
             };
 
             return this.imageRepository.saveImage(imageData)
@@ -77,7 +82,7 @@ class imageServices implements IImageServise {
     }
 
 
-    async deleteImage(imageId: string): Promise< boolean> {
+    async deleteImage(imageId: string): Promise<boolean> {
         try {
             return await this.imageRepository.deleteImageById(imageId);
         } catch (error) {

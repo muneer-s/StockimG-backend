@@ -11,7 +11,6 @@ export class ImageController {
 
     constructor(private ImageServices: IImageServise) { }
 
-
     async saveImage(req: Request, res: Response) {
         try {
             const { title, email } = req.body;
@@ -28,8 +27,6 @@ export class ImageController {
             res.status(500).json({ message: "Server error during image upload." });
         }
     }
-
-
 
     async getAllImages(req: Request, res: Response) {
         try {
@@ -57,21 +54,13 @@ export class ImageController {
 
             const file = (req.files as any)?.image?.[0];
             const existingImageUrl = req.body.existingImageUrl;
-
-            // const imageToUse = file ? file.path : existingImageUrl;
-
-
             if (!imageId) {
                 return res.status(BAD_REQUEST).json({ message: "Image ID is required." });
             }
 
             console.log("Editing Image:", { imageId, title, file });
-
-            const updatedImage = await this.ImageServices.editImage(imageId, title, file, existingImageUrl);
-
-            // res.status(OK).json({message: "Image updated successfully.",image: updatedImage});
+            await this.ImageServices.editImage(imageId, title, file, existingImageUrl);
             return res.status(OK).json(ResponseModel.success("Image updated successfully."));
-
         } catch (error) {
             console.log(error as Error)
             return res.status(INTERNAL_SERVER_ERROR).json(ResponseModel.error('INTERNAL SERVER ERROR', error as Error))
@@ -93,8 +82,6 @@ export class ImageController {
             }
 
             return res.status(OK).json(ResponseModel.success("Image deleted successfully"));
-
-
         } catch (error) {
             console.log(error as Error)
             return res.status(INTERNAL_SERVER_ERROR).json(ResponseModel.error('INTERNAL SERVER ERROR', error as Error))

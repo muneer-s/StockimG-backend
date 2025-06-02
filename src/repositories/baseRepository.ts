@@ -8,6 +8,16 @@ class BaseRepository<T extends Document> {
         this.model = model;
     }
 
+    async countDocuments(filter: FilterQuery<T> = {}): Promise<number> {
+        try {
+            return await this.model.countDocuments(filter);
+        } catch (error) {
+            console.error("Error in BaseRepository - countDocuments:", error);
+            throw new Error("Failed to count documents");
+        }
+    }
+
+
     async create(data: Partial<T>): Promise<T> {
         try {
             const document = new this.model(data);

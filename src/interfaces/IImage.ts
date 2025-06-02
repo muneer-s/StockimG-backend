@@ -5,4 +5,5 @@ export interface ImageInterface extends Document {
   email: string;
   title: string;
   image: string | null;
+  position:number
 }
