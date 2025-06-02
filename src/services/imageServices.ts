@@ -90,6 +90,17 @@ class imageServices implements IImageServise {
         }
     }
 
+    async reorderImages(_id: string, position: number): Promise<any> {
+        try {
+            return await this.imageRepository.reorderImages(_id, position)
+        } catch (error) {
+            throw error
+        }
+    }
+
+ 
+
+
 
 
 

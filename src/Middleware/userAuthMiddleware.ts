@@ -28,14 +28,15 @@ const userAuth = async (req: Request, res: Response, next: NextFunction): Promis
     let refresh_token = req.cookies.user_refresh_token;
 
     if (!refresh_token) {
+        console.log('refresh token illaaaaaa');
         return res.status(UNAUTHORIZED).json(ResponseModel.error('User Token expired or not available'))
     }
 
     if (!token) {
         try {
             const newAccessToken = await refreshAccessToken(refresh_token);
-            console.log(111,newAccessToken);
-            
+            console.log(111, newAccessToken);
+
             // const accessTokenMaxAge = 30 * 60 * 1000;
 
             res.cookie('user_access_token', newAccessToken, {
@@ -53,25 +54,25 @@ const userAuth = async (req: Request, res: Response, next: NextFunction): Promis
             token = req.cookies.user_access_token;
         }
 
-        console.log(222,token);
-        
+        console.log(222, token);
+
         const decoded = jwt.verifyToken(token);
 
-        console.log(333,decoded);
+        console.log(333, decoded);
 
         if (decoded?.success) {
             let user = await userRepository.getUserById(decoded.decoded?.data?.toString());
 
             console.log(132, user);
 
-                req.userId = decoded.decoded?.data?.toString();
-                req.user = user;
-                next();
-            
+            req.userId = decoded.decoded?.data?.toString();
+            req.user = user;
+            next();
+
         } else {
             const newAccessToken = await refreshAccessToken(refresh_token);
-            console.log(135,newAccessToken);
-            
+            console.log(135, newAccessToken);
+
             // const accessTokenMaxAge = 30 * 60 * 1000;
 
             res.cookie('user_access_token', newAccessToken, {

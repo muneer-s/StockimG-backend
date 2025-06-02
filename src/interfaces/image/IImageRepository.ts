@@ -7,4 +7,5 @@ export interface IImageRepository {
   getImagesByEmail(email: string): Promise<ImageInterface[]>;
   editImage(imageId: string, imageData: any): Promise<ImageInterface | null>
   deleteImageById(imageId: string): Promise<boolean>
+    reorderImages(_id:string, position :number):Promise<any>
 }

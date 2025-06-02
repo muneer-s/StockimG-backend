@@ -88,6 +88,24 @@ export class ImageController {
         }
     }
 
+    async reorderImages(req: Request, res: Response) {
+        try {
+            
+            const { images } = req.body; // images: [{ _id, position }, ...]
+            console.log(1111111111111111111,images);
+
+            for (const { _id, position } of images) {
+                await this.ImageServices.reorderImages(_id, position)
+            }
+
+            return res.status(200).json({ success: true, message: "Order updated" });
+        } catch (error) {
+            console.error("Reorder error:", error);
+            return res.status(500).json({ success: false, message: "Server error" });
+        }
+    };
+
+
 
 
 }

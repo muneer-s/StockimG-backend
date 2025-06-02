@@ -17,6 +17,16 @@ class BaseRepository<T extends Document> {
         }
     }
 
+    async findByIdAndUpdate(id: string, update: Partial<T>): Promise<T | null> {
+        try {
+            return await this.model.findByIdAndUpdate(id, update, { new: true });
+        } catch (error) {
+            console.error("Error in BaseRepository - findByIdAndUpdate:", error);
+            throw new Error("Failed to update the document by ID");
+        }
+    }
+
+
 
     async create(data: Partial<T>): Promise<T> {
         try {

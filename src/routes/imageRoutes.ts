@@ -16,6 +16,7 @@ imageRouter
     .get('/viewImages', userAuth, (req, res) => { imageController.getAllImages(req, res) })
     .put('/editImage',userAuth,upload.fields([{ name: 'image', maxCount: 1 }]),(req,res)=>{imageController.editImage(req,res)})
     .delete('/deleteImage',userAuth,(req,res)=>{imageController.deleteImage(req,res)})
+    .put('/reorder',userAuth,(req,res)=>{imageController.reorderImages(req,res)})
 
 
 export default imageRouter;

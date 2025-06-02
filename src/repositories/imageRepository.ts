@@ -62,6 +62,16 @@ class ImageRepository implements IImageRepository {
         }
     }
 
+    async reorderImages(_id: string, position: number): Promise<any> {
+        try {
+            const result = await this.imageRepository.findByIdAndUpdate(_id, { position })
+            return result
+        } catch (error) {
+            throw error
+        }
+    }
+
+
 
 }
 
