@@ -34,13 +34,13 @@ const userAuth = async (req: Request, res: Response, next: NextFunction): Promis
 
     if (!token) {
         try {
+            console.log('refresh token und but acces illa sooooo');
+            
             const newAccessToken = await refreshAccessToken(refresh_token);
             console.log(111, newAccessToken);
 
-            // const accessTokenMaxAge = 30 * 60 * 1000;
-
             res.cookie('user_access_token', newAccessToken, {
-                maxAge: 7 * 24 * 60 * 60 * 1000,
+                maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
             token = newAccessToken;
@@ -73,10 +73,8 @@ const userAuth = async (req: Request, res: Response, next: NextFunction): Promis
             const newAccessToken = await refreshAccessToken(refresh_token);
             console.log(135, newAccessToken);
 
-            // const accessTokenMaxAge = 30 * 60 * 1000;
-
             res.cookie('user_access_token', newAccessToken, {
-                maxAge: 7 * 24 * 60 * 60 * 1000,
+                maxAge:  24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
             token = newAccessToken;

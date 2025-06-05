@@ -46,21 +46,16 @@ export class UserController {
                 return res.status(BAD_REQUEST).json(ResponseModel.error('Incorrect password. Please try again.'));
             }
 
-
-
-            // const time = this.milliseconds(0, 1, 0);
-            // const refreshTokenExpiryTime = this.milliseconds(0, 3, 0);
-
             const userAccessToken = jwtHandler.generateToken(isUserPresent._id.toString());
             const userRefreshToken = jwtHandler.generateRefreshToken(isUserPresent._id.toString());
 
             return res.status(OK)
                 .cookie('user_access_token', userAccessToken, {
-                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                    maxAge: 15 * 60 * 1000,
                     httpOnly: true,
                 })
                 .cookie('user_refresh_token', userRefreshToken, {
-                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                    maxAge:  24 * 60 * 60 * 1000,
                     httpOnly: true,
                 })
                 .json(ResponseModel.success('Login successfull', {
@@ -69,8 +64,6 @@ export class UserController {
                         name: isUserPresent.name,
                         userId: isUserPresent._id
                     },
-                    userAccessToken,
-                    userRefreshToken
                 }));
         } catch (error) {
             console.log('Error during login:', error);

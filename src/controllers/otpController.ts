@@ -4,7 +4,7 @@ import userModel from '../models/userModels';
 import { CreateJWT } from '../utils/generateToken';
 import { IOtpService } from '../interfaces/otp/IOtpService';
 import { ResponseModel } from '../utils/responseModel';
-const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR, NOT_FOUND } = STATUS_CODES;
+const { BAD_REQUEST, OK, INTERNAL_SERVER_ERROR, NOT_FOUND ,CREATED} = STATUS_CODES;
 const jwtHandler = new CreateJWT()
 
 
@@ -36,17 +36,15 @@ export class OtpController {
                 const userAccessToken = jwtHandler.generateToken(userDetails?._id.toString());
                 const userRefreshToken = jwtHandler.generateRefreshToken(userDetails?._id.toString());
 
-                return res.status(OK).cookie('user_access_token', userAccessToken, {
-                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                return res.status(CREATED).cookie('user_access_token', userAccessToken, {
+                    maxAge: 15 * 60 * 1000,
                     httpOnly: true,
                 }).cookie('user_refresh_token', userRefreshToken, {
-                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                    maxAge:  24 * 60 * 60 * 1000,
                     httpOnly: true,
                 }).json(
                     ResponseModel.success('OTP verification successful, account verified.', {
                         userData: userDetails,
-                        userAccessToken: userAccessToken,
-                        userRefreshToken: userRefreshToken
                     })
                 );
 

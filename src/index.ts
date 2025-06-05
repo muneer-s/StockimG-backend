@@ -24,7 +24,7 @@ connectDB();
 
 // Middleware
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json()); 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -35,7 +35,7 @@ app.use('/api/user', userRouter);
 app.use('/api/otp', otpRouter)
 app.use('/api/image', imageRouter)
 
-const PORT =  process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port  :${PORT}`);
